@@ -1,0 +1,15 @@
+Alright Guys, I am using Trang to generate XSD from XML.
+ 
+Being a lazy guy, this is all i could come up with for the XSD writing.
+
+Execute the following command from the exec directory where trang.jar is 
+
+java -jar trang.jar ../resources/alert-config.xml alert-config.xsd
+
+Dont forget to modify the alert element as unbounded
+
+<xs:element ref="alert" maxOccurs="unbounded"/>
+
+
+PS : I am generating the Java bean from this XSD through xmlbeans. Since this is 
+occasional process, I am keeping this in the build.xml but NOT invoking it everytime 
