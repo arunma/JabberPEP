@@ -14,14 +14,14 @@ public class ConnectionManager {
 				hostname, 5222);
 
 		configuration.setSASLAuthenticationEnabled(true);
-		//configuration.setSelfSignedCertificateEnabled(true);
+		configuration.setSelfSignedCertificateEnabled(true);
 		XMPPConnection connection = new XMPPConnection(configuration);
 
 		SASLAuthentication.supportSASLMechanism("PLAIN", 0);
 		connection.connect();
 
 		connection.login(jid, password, "Smack");
-		System.out.println("Connected")	;
+		System.out.println("Connected");
 		return connection;
 	}
 	

@@ -67,8 +67,7 @@ public class TweetClient extends JFrame {
 		
 		usernameField.setText("arun");
 		passwordField.setText("arun");
-		//serverField.setText("arun-laptop");
-		serverField.setText("Aruns-MacBook-Pro.local");
+		serverField.setText("arun-laptop");
 		
 		
 		jPanel1.add(userLabel);

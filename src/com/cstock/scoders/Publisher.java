@@ -7,8 +7,7 @@ import org.jivesoftware.smackx.PEPManager;
 
 public class Publisher {
 
-//	static String hostname = "arun-laptop";
-	static String hostname = "Aruns-MacBook-Pro.local";
+	static String hostname = "arun-laptop";
 	PEPManager pepManager=null;
 	
 	public void publish(XMPPConnection connection, String message) throws XMPPException {
@@ -17,7 +16,7 @@ public class Publisher {
 		tweet.setMessage(message);
 		TweetItem item=new TweetItem(StringUtils.randomString(5),tweet);
 		System.out.println("TWeetItem"+item.getItemDetailsXML());
-		System.out.println("Tweet  :"+item.getTweet());
+		System.out.println("Tweet"+item.getTweet());
 		System.out.println("Tweet message"+item.getTweet().getMessage());
 		getPEPManager(connection).publish(item);
 		System.out.println("PUblished.....");
