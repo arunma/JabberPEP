@@ -1,58 +1,44 @@
 package com.cstock.scoders;
 
-import javax.net.ssl.SSLSocketFactory;
-
-import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.util.StringUtils;
+import org.jivesoftware.smackx.PEPManager;
 
 public class Publisher {
 
-	/**
-	 * @param args
-	 */
 	static String hostname = "arun-laptop";
+	PEPManager pepManager=null;
+	
+	public void publish(XMPPConnection connection, String message) throws XMPPException {
 
-	private XMPPConnection connect(String jid, String password)
-			throws XMPPException {
-		ConnectionConfiguration configuration = new ConnectionConfiguration(hostname, 5222);
-       // configuration.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
-       // configuration.setSocketFactory(new DummySSLSocketFactory());
-        //configuration.setSocketFactory(SSLSocketFactory.getDefault());
-
-		 //configuration.setCompressionEnabled(true);
-		 configuration.setSASLAuthenticationEnabled(true);
-		 //configuration.setExpiredCertificatesCheckEnabled(false);
-		configuration.setSelfSignedCertificateEnabled(true);
-		//SecurityMode mode=configuration.getSecurityMode();
-		//configuration.setSecurityMode(SecurityMode.disabled);
-		//System.out.println(mode);
-		XMPPConnection connection = new XMPPConnection(configuration);
-		//XMPPConnection connection = new XMPPConnection(hostname);
-		//jid="jid"+"@"+hostname;
-		
-		SASLAuthentication.supportSASLMechanism("PLAIN", 0);
-		connection.connect();
-
-		connection.login(jid, password, "Smack");
-		System.out.println("Connected");
-		return connection;
+		Tweet tweet=new Tweet();
+		tweet.setMessage(message);
+		TweetItem item=new TweetItem(StringUtils.randomString(5),tweet);
+		System.out.println("TWeetItem"+item.getItemDetailsXML());
+		System.out.println("Tweet"+item.getTweet());
+		System.out.println("Tweet message"+item.getTweet().getMessage());
+		getPEPManager(connection).publish(item);
+		System.out.println("PUblished.....");
+		//holdOn();
+	
 	}
 
-	public static void main(String[] args) {
+	public PEPManager getPEPManager(XMPPConnection connection) throws XMPPException{
+		if (pepManager==null){
+			pepManager = new PEPManager(connection);
+		}
+		return pepManager;
+	}
 
-		Publisher publisher=new Publisher();
+	private static void holdOn() {
+		Object obj=new Object();
 		try {
-			XMPPConnection connection=publisher.connect("arun","arun");
-			System.out.println("connection:"+connection);
-		} catch (XMPPException e) {
+			synchronized(obj){
+				obj.wait();
+			}
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//holdOn();
-		
 	}
-	
-
-
 }
