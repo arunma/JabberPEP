@@ -12,7 +12,8 @@ import org.jivesoftware.smackx.provider.PEPProvider;
 
 public class Subscriber implements PEPListener{
 
-	static String hostname = "arun-laptop";
+	//static String hostname = "arun-laptop";
+	static String hostname = "Aruns-MacBook-Pro.local";
 	
 	public static void main(String[] args) {
 
@@ -30,7 +31,7 @@ public class Subscriber implements PEPListener{
 			addExtensionProvider("event", "http://jabber.org/protocol/pubsub#event", provider);
 		
 		try {
-			PEPManager manager=new PEPManager(connect("psi","psi"));
+			PEPManager manager=new PEPManager(connect("sub","sub"));
 			manager.addPEPListener(this);
 			
 		} catch (XMPPException e) {

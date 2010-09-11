@@ -43,37 +43,4 @@ public class TweetProvider extends PEPProvider {
 		return new TweetItems(new TweetItem(id, tweet));
 	}
 
-	
-
-	public void processText(XmlPullParser xpp) throws XmlPullParserException {
-		char ch[] = xpp.getTextCharacters(holderForStartAndLength);
-		System.out.println("Char STRING:::"+new String(ch));
-		int start = holderForStartAndLength[0];
-		int length = holderForStartAndLength[1];
-		System.out.print("Characters:    \"");
-		for (int i = start; i < start + length; i++) {
-			switch (ch[i]) {
-			case '\\':
-				System.out.print("\\\\");
-				break;
-			case '"':
-				System.out.print("\\\"");
-				break;
-			case '\n':
-				System.out.print("\\n");
-				break;
-			case '\r':
-				System.out.print("\\r");
-				break;
-			case '\t':
-				System.out.print("\\t");
-				break;
-			default:
-				System.out.print(ch[i]);
-				break;
-			}
-		}
-		System.out.print("\"\n");
-	}
-
 }
