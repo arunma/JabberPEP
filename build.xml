@@ -1,0 +1,71 @@
+<project name="PEP" default="dist">
+	<description>
+	        Twitter Server 
+	    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist"  location="dist"/>
+	<property name="lib"  location="lib"/>
+	<property name="project.name" value="AlertXpert"/>
+	<property name="version" value="0.1"/>
+	<property name="tweet.item.gen" value="tweet-item-gen.jar"/>
+	
+
+	<path id="class.path">
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+		
+	<taskdef name="xmlbean" classname="org.apache.xmlbeans.impl.tool.XMLBean" classpathref="class.path"/>
+	
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="init"
+	        description="compile the source " >
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}" classpathref="class.path"/>
+		<copy file="resources/log4j.xml" todir="${build}"></copy>
+	</target>
+
+	<target name="dist" depends="compile"
+	        description="generate the distribution" >
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}"/>
+
+		<jar jarfile="${dist}/${project.name}-${version}.jar" basedir="${build}" manifest="MANIFEST.MF" />
+	</target>
+
+	<target name="clean"
+	        description="clean up" >
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+
+	
+	
+	<target name="config-classes-gen" > 
+		<xmlbean classgendir="${build}" classpathref="class.path" failonerror="true" destfile="${tweet.item.gen}" >
+		  <fileset dir="exec" includes="**/*.*"/>
+		 
+		</xmlbean>
+		<copy file="${tweet.item.gen}" todir="${dist}"/>
+	</target>
+	
+	<target name="deliver">
+		
+		<copy>
+			<fileset dir="lib" includes="*.jar"/>
+			<fileset dir="resources" includes="*.*"/>	
+		</copy>
+			
+	
+	</target>
+</project>
